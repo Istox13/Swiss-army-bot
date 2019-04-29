@@ -1,4 +1,5 @@
-from telegram.ext import Updater, MessageHandler, Filters, ReplyKeyboardMarkup
+from telegram.ext import Updater, MessageHandler, Filters
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CommandHandler
 from API_key import key_shwed as key
 from API.API_exmo import EXMO_API
@@ -35,7 +36,7 @@ def get_stat(bot, update, args):
 
 def start(bot, update):
     update.message.reply_text(
-        "Привет! Я швейцарский-бот. Напиши /help что-бы узнать поподробнее.")
+        "Привет! Я швейцарский-бот. Напиши /help что-бы узнать поподробнее.", reply_markup=markup)
 
 
 def help(bot, update):
@@ -49,8 +50,7 @@ def help(bot, update):
 /вычисли_по_ip <ip> - выводит информацию о ip
 /добавь_задачу <задача>
 /удали_задачу <номер задачи>
-/покажи_задачи""", 
-                              reply_markup=markup)
+/покажи_задачи""")
 
 def add_task(bot, update, args, user_data):
     task = ' '.join(args)
@@ -112,6 +112,6 @@ def main():
 if __name__ == '__main__':
     print('Bot ON')
     reply_keyboard = [['/список_валют', '/мой_ip'],
-                  ['/покажи_задачи']]
+                  ['/покажи_задачи', '/help']]
     markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False)
     main()

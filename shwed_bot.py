@@ -1,18 +1,18 @@
 from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext import CommandHandler
 from API_key import key_shwed as key
-from API.expo import EXPO_API
+from API.API_exmo import EXMO_API
 from API.API_traslate import translater
 from API.API_ip import search_ip, get_my_ip
 
 
 def get_list(bot, update):
-    update.message.reply_text(EXPO_API.get_list_values())
+    update.message.reply_text(EXMO_API.get_list_values())
 
 
 def get_price(bot, update, args):
     a, b = args[:2]
-    list_prices = EXPO_API.get_price(a, b)
+    list_prices = EXMO_API.get_price(a, b)
     if not list_prices:
         update.message.reply_text('Неверный ввод или информации по данной паре нет')
     else:
@@ -22,7 +22,7 @@ def get_price(bot, update, args):
 
 def get_stat(bot, update, args):
     a, b = sorted(args[:2])
-    list_prices = EXPO_API.get_stat(a, b)
+    list_prices = EXMO_API.get_stat(a, b)
     if not list_prices:
         update.message.reply_text('Неверный ввод')
     else:

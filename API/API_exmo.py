@@ -8,7 +8,7 @@ class EXMO_API:
         return ', '.join(values)
 
     def get_price(a, b):
-        a, b = sorted([a, b])
+        a, b = [a, b]
         ls = requests.get('https://api.exmo.com/v1/currency/').json()
         values = [a, b]
 
@@ -19,10 +19,15 @@ class EXMO_API:
 
             if not zapr.values():
                 zapr = requests.get(f'https://api.exmo.com/v1/order_book/?pair={b}_{a}').json()
+                print(zapr)
                 values = [b, a] 
                 if not zapr:
                     return False 
+                zapr = zapr[f'{values[0]}_{values[1]}']
+                return {'max': str(1 / float(zapr['ask_top'])), 'min': str(1 / float(zapr['bid_top'])), 'values': values[::-1]}
+
             zapr = zapr[f'{values[0]}_{values[1]}']
+            print(zapr)
             return {'max': zapr['ask_top'], 'min': zapr['bid_top'], 'values': values}
 
     def get_stat(a, b):
